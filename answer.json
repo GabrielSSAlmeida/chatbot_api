@@ -1,0 +1,18 @@
+{
+    "localizacao_botao_volume": {
+        "tam": 2,
+        "response": [
+            "TEste 0",
+            "teste 1",
+            "teste2"
+        ]
+    },
+    "localizacao_botao_power":{
+        "tam": 2,
+        "response":[
+            "teste 3",
+            "teste 4",
+            "teste 5"
+        ]
+    }
+}
