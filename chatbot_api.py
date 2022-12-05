@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response, jsonify
 import json
 import random
 
@@ -12,6 +12,8 @@ def get_answer():
     aswr = json.load(file)
     tam = aswr[intent]["tam"]
     response = aswr[intent]["response"][random.randint(0, tam)]
-    return response
-
+    return make_response(
+        jsonify(response)
+    )
+    
 app.run(host='0.0.0.0', debug=False)

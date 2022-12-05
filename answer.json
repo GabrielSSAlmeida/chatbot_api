@@ -1,20 +1,33 @@
 {
     "localizacao_botao_volume": {
-        "tam": 0,
+        "tam": 2,
         "response": [
-            "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular."
+            {
+                "value": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular.",
+                "type": "text"
+            },
+            {
+                "value": "https://motorola-global-portal.custhelp.com/euf/assets/images/faqs/x-images/Brasil/reboot.PNG",
+                "type": "image",
+                "text": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular."
+            },
+            {
+                "value": "https://www.youtube.com/watch?v=QxJQbWOIK4s&ab_channel=Ingresso.com",
+                "type": "video"
+            }
+            
         ]
     },
     "localizacao_botao_power":{
         "tam": 0,
         "response":[
-            "O botao de power geralmente e o menor botao que esta localizado ou no lado direito ou no lado esquerdo do celular."
+            "O botao de power geralmente e o menor botao que\nesta localizado ou no lado direito ou no lado esquerdo\ndo celular."
         ]
     },
     "print":{
         "tam": 0,
         "response":[
-            "E preciso pressionar o botao power e volume- ou botao power e home."
+            "E preciso pressionar o botao power e\nvolume- ou botao power e home."
         ]
     },
     "saudacoes":{
@@ -32,19 +45,19 @@
     "selfie":{
         "tam": 0,
         "response":[
-            "Selfie e uma foto tirada pela propria pessoa em que ela pode estar sozinha ou em grupo."
+            "Selfie e uma foto tirada pela propria pessoa\nem que ela pode estar sozinha ou em grupo."
         ]
     },
     "flash":{
         "tam": 0,
         "response":[
-            "Procure o simbolo de raio no seu aplicativo de camera. Geralmente um raio todo preenchido representa o flash ligado."
+            "Procure o simbolo de raio no seu aplicativo\n de camera. Geralmente um raio todo\npreenchido representa o flash ligado."
         ]
     },
     "temporizador":{
         "tam": 0,
         "response":[
-            "Procure o simbolo de relogio no seu aplicativo de camera. Ao clicar nesse icone, escolha o tempo desejado para tirar a foto."
+            "Procure o simbolo de relogio no seu aplicativo\nde camera. Ao clicar nesse icone, escolha\n o tempo desejado para tirar a foto."
         ]
     }
 }
