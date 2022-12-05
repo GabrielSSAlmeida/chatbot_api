@@ -1,18 +1,50 @@
 {
     "localizacao_botao_volume": {
-        "tam": 2,
+        "tam": 0,
         "response": [
-            "TEste 0",
-            "teste 1",
-            "teste2"
+            "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular."
         ]
     },
     "localizacao_botao_power":{
-        "tam": 2,
+        "tam": 0,
         "response":[
-            "teste 3",
-            "teste 4",
-            "teste 5"
+            "O botao de power geralmente e o menor botao que esta localizado ou no lado direito ou no lado esquerdo do celular."
+        ]
+    },
+    "print":{
+        "tam": 0,
+        "response":[
+            "E preciso pressionar o botao power e volume- ou botao power e home."
+        ]
+    },
+    "saudacoes":{
+        "tam": 0,
+        "response":[
+            "Ola, eu sou o Bob!"
+        ]
+    },
+    "despedidas":{
+        "tam": 0,
+        "response":[
+            "Tchau! Ate a próxima."
+        ]
+    },
+    "selfie":{
+        "tam": 0,
+        "response":[
+            "Selfie e uma foto tirada pela propria pessoa em que ela pode estar sozinha ou em grupo."
+        ]
+    },
+    "flash":{
+        "tam": 0,
+        "response":[
+            "Procure o simbolo de raio no seu aplicativo de camera. Geralmente um raio todo preenchido representa o flash ligado."
+        ]
+    },
+    "temporizador":{
+        "tam": 0,
+        "response":[
+            "Procure o simbolo de relogio no seu aplicativo de camera. Ao clicar nesse icone, escolha o tempo desejado para tirar a foto."
         ]
     }
 }
