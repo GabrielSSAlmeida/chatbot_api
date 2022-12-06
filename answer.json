@@ -3,7 +3,7 @@
         "tam": 2,
         "response": [
             {
-                "value": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular.",
+                "text": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular.",
                 "type": "text"
             },
             {
@@ -13,7 +13,8 @@
             },
             {
                 "value": "https://www.youtube.com/watch?v=QxJQbWOIK4s&ab_channel=Ingresso.com",
-                "type": "video"
+                "type": "video",
+                "text": "Mesagem video"
             }
             
         ]
