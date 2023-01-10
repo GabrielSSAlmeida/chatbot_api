@@ -1,6 +1,6 @@
 {
     "localizacao_botao_volume": {
-        "tam": 2,
+        "tam": 1,
         "response": [
             {
                 "text": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular.",
@@ -10,55 +10,100 @@
                 "value": "https://motorola-global-portal.custhelp.com/euf/assets/images/faqs/x-images/Brasil/reboot.PNG",
                 "type": "image",
                 "text": "O botao de volume geralmente e o maior que esta localizado ou no lado direito ou no lado esquerdo do celular."
-            },
-            {
-                "value": "https://www.youtube.com/watch?v=QxJQbWOIK4s&ab_channel=Ingresso.com",
-                "type": "video",
-                "text": "Mesagem video"
-            }
-            
+            } 
         ]
     },
     "localizacao_botao_power":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "O botao de power geralmente e o menor botao que\nesta localizado ou no lado direito ou no lado esquerdo\ndo celular."
+            {
+                "text": "O botao de power geralmente e o menor botao que esta localizado ou no lado direito ou no lado esquerdo do celular.",
+                "type": "text"
+            },
+            {
+                "value": "https://motorola-global-portal.custhelp.com/euf/assets/images/faqs/x-images/Brasil/reboot.PNG",
+                "type": "image",
+                "text": "O botao de power geralmente e o menor botao que esta localizado ou no lado direito ou no lado esquerdo do celular."
+            }
         ]
     },
     "print":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "E preciso pressionar o botao power e\nvolume- ou botao power e home."
+            {
+                "text": "E preciso pressionar o botao power e volume- ou botao power e home.",
+                "type": "text"
+            },
+            {
+                "value": "https://www.youtube.com/watch?v=mBd8XMFexK8&ab_channel=BrunoSiqueira-SimplificandoCelular",
+                "type": "video",
+                "text": "Assista o video tutorial para entender melhor."
+            }
         ]
     },
     "saudacoes":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "Ola, eu sou o Bob!"
+            {
+                "text": "Ola, eu sou o Bob!",
+                "type": "text"
+            },
+            {
+                "text": "Ola, como posso te ajudar?",
+                "type": "text"
+            }
         ]
     },
     "despedidas":{
         "tam": 0,
         "response":[
-            "Tchau! Ate a próxima."
+            {
+                "text": "Tchau! Ate a próxima.",
+                "type": "text"
+            }  
         ]
     },
     "selfie":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "Selfie e uma foto tirada pela propria pessoa\nem que ela pode estar sozinha ou em grupo."
+            {
+                "text": "Selfie e uma foto tirada pela propria pessoa em que ela pode estar sozinha ou em grupo.",
+                "type": "text"
+            },
+            {
+                "value": "https://www.youtube.com/watch?v=ih3O7Ww50_U&ab_channel=BrunoSiqueira-SimplificandoCelular",
+                "type": "video",
+                "text": "Assista o video para entender melhor."
+            }
         ]
     },
     "flash":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "Procure o simbolo de raio no seu aplicativo\n de camera. Geralmente um raio todo\npreenchido representa o flash ligado."
+            {
+                "text": "Procure o simbolo de raio no seu aplicativo de camera. Geralmente um raio todo preenchido representa o flash ligado.",
+                "type": "text"
+            },
+            {
+                "value": "https://www.youtube.com/watch?v=W9-irb2Ycus&ab_channel=40MaisDigital",
+                "type": "video",
+                "text": "Assista o video para entender melhor."
+            } 
         ]
     },
     "temporizador":{
-        "tam": 0,
+        "tam": 1,
         "response":[
-            "Procure o simbolo de relogio no seu aplicativo\nde camera. Ao clicar nesse icone, escolha\n o tempo desejado para tirar a foto."
+            {
+                "text": "Procure o simbolo de relogio no seu aplicativo de camera. Ao clicar nesse icone, escolha o tempo desejado para tirar a foto.",
+                "type": "text"
+            },
+            {
+                "value": "https://www.youtube.com/watch?v=KUDt9a_szFc&ab_channel=40MaisDigital",
+                "type": "video",
+                "text": "Assista o video para entender melhor."
+            } 
+            
         ]
     }
 }
