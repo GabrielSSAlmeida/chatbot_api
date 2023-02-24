@@ -27,7 +27,7 @@
             }
         ]
     },
-    "print_teste":{
+    "print":{
         "tam": 1,
         "response":[
             {
@@ -40,33 +40,6 @@
                 "text": "Assista o vídeo tutorial para entender melhor.😀"
             }
         ]
-    },
-
-    "print":{
-        "oque_entity":{
-            "tam": 0,
-            "response":[
-                {
-                    "text": "print é uma foto da tela do seu celular😀",
-                    "type": "text"
-                }
-            ]
-        },
-
-        "como_entity":{
-            "tam": 1,
-            "response":[
-                {
-                    "text": "É preciso pressionar o botão power e volume- ou botão power e home.😀",
-                    "type": "text"
-                },
-                {
-                    "value": "https://www.youtube.com/watch?v=mBd8XMFexK8&ab_channel=BrunoSiqueira-SimplificandoCelular",
-                    "type": "video",
-                    "text": "Assista o vídeo tutorial para entender melhor.😀"
-                }
-            ]
-        }
     },
     "saudacoes":{
         "tam": 1,
@@ -94,7 +67,7 @@
         "tam": 1,
         "response":[
             {
-                "text": "Selfie e uma foto tirada pela própria pessoa em que ela pode estar sozinha ou em grupo.",
+                "text": "Selfie é uma foto tirada pela própria pessoa em que ela pode estar sozinha ou em grupo.",
                 "type": "text"
             },
             {
