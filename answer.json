@@ -110,11 +110,16 @@
         "type":"text"
     },
     "teste":{
-        "tam":1,
+        "tam":2,
         "response":[
             {
                 "text":"TESTE TESTE TESTE",
                 "type":"text"
+            },
+            {
+                "value":"https://www.youtube.com/watch?v=KUDt9a_szFc&ab_channel=40MaisDigital",
+                "type":"video",
+                "text":"Assista o vídeo para entender melhor."
             }
         ]
     }

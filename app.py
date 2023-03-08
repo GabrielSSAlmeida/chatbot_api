@@ -36,7 +36,7 @@ def get_answer():
         )
 
 
-#Criar o audio
+#Criar o audio - Pegar um ID, Criar audios com final 1,2,3...
 @app.route('/audio', methods=['GET'])
 def get_audio_answer():
     if request.method == 'GET':
@@ -58,10 +58,12 @@ def get_audio_answer():
 
         mytext = response["text"]
         audioObj = gTTS(text=mytext, lang=language, slow=False, tld=tld)
+        if not os.path.isdir('./audios'):
+            os.mkdir('./audios')
         audioObj.save('./audios/'+filename)
 
 
-        response['audio'] = "http://192.168.1.2:5000/audio/download?filename=" + filename
+        response['audio'] = "http://192.168.1.3:5000/audio/download?filename=" + filename
 
         print(response)
         return make_response(
@@ -76,6 +78,16 @@ def get_audio_download():
         nameFile = request.args.get('filename')
         return send_from_directory('./audios/', nameFile, as_attachment=False)
 
+#Deletar o audio 
+@app.route('/audio/delete/', methods=['GET'])
+def delete_audio():
+    if request.method == 'GET':
+        dirName = request.args.get('dirname')
+        if os.path.isdir(dirName):
+            shutil.rmtree(dirName)
+            return ('', 204)
+        else:
+            return ('', 404)
 
 @app.route('/addJson', methods=['POST'])
 def add_intent_answer_json():
@@ -117,8 +129,6 @@ def edit_answer_json(intent):
             #cria um arquivo json temporario
             with open('answer.json', 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
                 dados = json.load(arq)
-                print(dados)
-                print(intent)
                 if intent in dados:
                     #escreve nesse json
                     tam = len(responseArray)
@@ -145,8 +155,6 @@ def delete_intent_json(intent):
             #cria um arquivo json temporario
             with open('answer.json', 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
                 dados = json.load(arq)
-                print(dados)
-                print(intent)
                 if intent in dados:
                     dados.pop(intent, None)
 
@@ -159,6 +167,9 @@ def delete_intent_json(intent):
             return 'sucess'
         except:
             return 'Erro'
+        
+
+
     
 
 app.run(debug=True, host='0.0.0.0')
