@@ -3,9 +3,12 @@ from wit import Wit
 import json, shutil, random, tempfile, os
 from gtts import gTTS
 
-
-client = Wit(access_token="4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT")
+#4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT - Chatbot
+#LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ - Teste
+client = Wit(access_token="LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ")
 app = Flask(__name__)
+
+#Vai precisar tratar entidades???
 
 
 language = 'pt'
@@ -89,6 +92,7 @@ def delete_audio():
         else:
             return ('', 404)
 
+
 @app.route('/addJson', methods=['POST'])
 def add_intent_answer_json():
     if request.method == 'POST':
@@ -101,7 +105,7 @@ def add_intent_answer_json():
             with open('answer.json', 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
                 dados = json.load(arq)
                 #escreve nesse json
-                tam = len(responseArray)
+                tam = len(responseArray)- 1
                 dados[intentName] = {
                     "tam": tam,
                     "response": responseArray
@@ -131,7 +135,7 @@ def edit_answer_json(intent):
                 dados = json.load(arq)
                 if intent in dados:
                     #escreve nesse json
-                    tam = len(responseArray)
+                    tam = len(responseArray)- 1
                     dados[intent] = {
                         "tam": tam,
                         "response": responseArray
@@ -168,8 +172,85 @@ def delete_intent_json(intent):
         except:
             return 'Erro'
         
-
-
+#função que verifica se existe uma intenção
+def verify_intent(intentName):
+    intents = client.intent_list()
+    for intent in intents:
+        if intent['name'] == intentName:
+            return True #Existe a intenção
     
+    return False#não existe a intenção
+
+#Criar intenção no Wit
+@app.route('/intent', methods=['POST'])
+def post_intent():
+    if request.method == 'POST':
+        try:
+            responseJson = request.get_json()
+            intentName = responseJson['name']
+
+            if(verify_intent(intentName)):
+                return 'Intent já existe'
+
+            witResponse = client.create_intent(intentName)
+            print(witResponse)#Não sei se vai precisar deste ID.
+            finalReturn = witResponse['id']+"-"+witResponse['name']
+            return finalReturn
+        except:
+            return 'Erro'    
+
+#Enviar as perguntas para treinar o bot
+@app.route('/train', methods=['POST'])
+def post_utterances():
+    if request.method == 'POST':
+        try:
+            utterances = request.get_json()
+            #Verificando se a intenção existe (Add para entidade caso precise)
+            for utterance in utterances:
+                if(not verify_intent(utterance['intent'])): #Se não existe a intent, retorna o erro
+                    return 'Alguma intent enviada não existe'
+                
+            witResponse = client.train(utterances)
+            return witResponse
+        
+        except Exception as e:
+            print(e)
+            return 'Error'
+    
+
+#deletar uma intent
+#OBS: TIVE QUE ALTERAR O ARQUIVO WIT, POIS TINHA UM ERRO COM A FUNÇÃO 'urllib.quote_plus()'
+#A IMPORTAÇÃO MUDOU PARAR 'import urllib.parse' e a chamada foi para 'urllib.parse.quote_plus()'
+@app.route('/delete/<string:intentName>', methods=['DELETE'])
+def delete_intent(intentName):
+    try:
+        if request.method == 'DELETE':
+            if(verify_intent(intentName)):
+                witResponse = client.delete_intent(intentName)
+                return witResponse
+            
+            return 'Intent não existe'
+    except Exception as e:
+            print(e)
+            return 'Error'        
+
+        
+
+#deletar uma utterance
+@app.route('/delete/utterance', methods=['DELETE'])
+def delete_utterance():
+    if request.method == 'DELETE':
+        try:
+            utterances = request.get_json()
+            utterances_array = [] #Array de strings com as utterances que deseja excluir
+            for utterance in utterances:
+                utterances_array.append(utterance['text'])
+
+            witResponse = client.delete_utterances(utterances_array)
+            return witResponse
+        except Exception as e:
+            print(e)
+            return 'Error'
+        
 
 app.run(debug=True, host='0.0.0.0')

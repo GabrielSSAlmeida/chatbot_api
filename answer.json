@@ -110,7 +110,7 @@
         "type":"text"
     },
     "teste":{
-        "tam":2,
+        "tam":1,
         "response":[
             {
                 "text":"TESTE TESTE TESTE",
