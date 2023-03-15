@@ -8,8 +8,6 @@ from gtts import gTTS
 client = Wit(access_token="LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ")
 app = Flask(__name__)
 
-#Vai precisar tratar entidades???
-
 
 language = 'pt'
 tld = 'com.br'
@@ -86,7 +84,7 @@ def get_audio_download():
 def delete_audio():
     if request.method == 'GET':
         dirName = request.args.get('dirname')
-        if os.path.isdir(dirName):
+        if os.path.isdir(dirName):#se existe o diretorio
             shutil.rmtree(dirName)
             return ('', 204)
         else:
@@ -251,6 +249,44 @@ def delete_utterance():
         except Exception as e:
             print(e)
             return 'Error'
+
+#get all intents
+@app.route('/get_intents', methods=['GET'])
+def get_intents():
+    if request.method == 'GET':
+        try:
+            return client.intent_list()
+        except Exception as e:
+            print(e)
+            return 'Error'
+
+#get all utterances
+#numberOfUtterances <Obrigatorio>= Numero de Utterances(Mensagens de treinamento) maximos que deve receber entre 1 a 10000.
+@app.route('/get_utterances/<int:numberOfUtterances>', methods=['GET'])
+def get_utterances(numberOfUtterances):
+    if request.method == 'GET':
+        try:
+            intentName = request.args.get('intent')
+            return client.get_utterances(limit= numberOfUtterances,intents=[intentName])
+        except Exception as e:
+            print(e)
+            return 'Error'
         
+
+#get all response
+@app.route('/get_response', methods=['GET'])
+def get_response():
+    if request.method == 'GET':
+        try:
+            intentName = request.args.get('intent')
+            file = open("answer.json", encoding="utf-8")
+            aswr = json.load(file)
+            response = aswr[intentName]['response']
+            return make_response(
+                jsonify(response)
+            )
+        except Exception as e:
+            print(e)
+            return 'Error'
 
 app.run(debug=True, host='0.0.0.0')
