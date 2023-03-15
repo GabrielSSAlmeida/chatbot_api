@@ -177,15 +177,15 @@ class Wit(object):
         return resp
 
     def trait_list(self, headers=None, verbose=None):
-    	"""
-    	Returns list of all traits associated with your app.
-    	"""
-    	params = {}
-    	headers = headers or {}
+        """
+        Returns list of all traits associated with your app.
+        """
+        params = {}
+        headers = headers or {}
         if verbose:
-    		params['verbose'] = True
-    	resp = req(self.logger, self.access_token, 'GET', '/traits', params, headers=headers)
-    	return resp
+            params['verbose'] = True
+        resp = req(self.logger, self.access_token, 'GET', '/traits', params, headers=headers)
+        return resp
 
     def trait_info(self, trait_name, headers=None, verbose=None):
         """
@@ -233,7 +233,7 @@ class Wit(object):
         """
         Deletes a role associated with the entity.
 
-		:param entity_name: name of entity whose particular role is to be deleted
+        :param entity_name: name of entity whose particular role is to be deleted
         :param role_name: name of role to be deleted
         """
         params = {}
@@ -248,7 +248,7 @@ class Wit(object):
         """
         Deletes a keyword associated with the entity.
 
-		:param entity_name: name of entity whose particular keyword is to be deleted
+        :param entity_name: name of entity whose particular keyword is to be deleted
         :param keyword_name: name of keyword to be deleted
         """
         params = {}
@@ -263,7 +263,7 @@ class Wit(object):
         """
         Delete a synonym of the keyword of the entity.
 
-		:param entity_name: name of entity whose particular keyword is to be deleted
+        :param entity_name: name of entity whose particular keyword is to be deleted
         :param keyword_name: name of keyword to be deleted
         """
         params = {}
@@ -292,7 +292,7 @@ class Wit(object):
         """
         Deletes a value associated with the trait.
 
-		:param trait_name: name of trait whose particular value is to be deleted
+        :param trait_name: name of trait whose particular value is to be deleted
         :param value_name: name of value to be deleted
         """
         params = {}
@@ -307,7 +307,7 @@ class Wit(object):
         """
         Returns a JSON array of utterances.
 
-		:param limit: number of utterances to return
+        :param limit: number of utterances to return
         :param offset: number of utterances to skip
         :param intents: list of intents to filter the utterances
         """
@@ -328,13 +328,13 @@ class Wit(object):
         """
         Delete utterances from your app.
 
-		:param utterances: list of utterances to be deleted
+        :param utterances: list of utterances to be deleted
         """
         params = {}
         headers = headers or {}
         data = []
         for utterance in utterances:
-        	data.append({"text":utterance})
+            data.append({"text":utterance})
         if verbose:
             params['verbose'] = verbose
         resp = req(self.logger, self.access_token, 'DELETE', '/utterances', params, json=data , headers=headers)
@@ -344,7 +344,7 @@ class Wit(object):
         """
         Returns an array of all your apps.
 
-		:param limit: number of apps to return
+        :param limit: number of apps to return
         :param offset: number of utterances to skip
         """
         params = {}
@@ -419,8 +419,8 @@ class Wit(object):
         """
         Create a new version of your app.
 
-		:param app_id: ID of existing app
-		:param tag_name: name of tag
+        :param app_id: ID of existing app
+        :param tag_name: name of tag
         """
         params = {}
         headers = headers or {}
@@ -435,8 +435,8 @@ class Wit(object):
         """
         Delete a specific version of your app.
 
-		:param app_id: ID of existing app
-		:param tag_name: name of tag
+        :param app_id: ID of existing app
+        :param tag_name: name of tag
         """
         params = {}
         headers = headers or {}
@@ -461,7 +461,7 @@ class Wit(object):
         """
         Create a new app with all the app data from the exported app.
 
-		:param name: name of the new app
+        :param name: name of the new app
         :param private: private if true
         """
         params = {}
@@ -479,7 +479,7 @@ class Wit(object):
         """
         Creates a new intent with the given attributes.
 
-		:param intent_name: name of intent to be created
+        :param intent_name: name of intent to be created
         """
         params = {}
         headers = headers or {}
@@ -494,9 +494,9 @@ class Wit(object):
         """
         Creates a new intent with the given attributes.
 
-		:param entity_name: name of entity to be created
-		:param roles: list of roles you want to create for the entity
-		:param lookups:  list of lookup strategies
+        :param entity_name: name of entity to be created
+        :param roles: list of roles you want to create for the entity
+        :param lookups:  list of lookup strategies
         """
         params = {}
         headers = headers or {}
@@ -513,9 +513,9 @@ class Wit(object):
         """
         Updates the attributes of an entity.
 
-		:param entity_name: name of entity to be updated
-		:param roles: updated list of roles
-		:param lookups:  updated list of lookup strategies
+        :param entity_name: name of entity to be updated
+        :param roles: updated list of roles
+        :param lookups:  updated list of lookup strategies
         """
         params = {}
         headers = headers or {}
@@ -532,7 +532,7 @@ class Wit(object):
         """
         Add a possible value into the list of keywords for the keywords entity.
 
-		:param entity_name: name of entity to which keyword is to be added
+        :param entity_name: name of entity to which keyword is to be added
         """
         params = {}
         headers = headers or {}
@@ -546,9 +546,9 @@ class Wit(object):
         """
         Create a new synonym of the canonical value of the keywords entity.
 
-		:param entity_name: name of entity to which synonym is to be added
-		:param keyword_name: name of keyword to which synonym is to be added
-		:param synonym: name of synonym to be created
+        :param entity_name: name of entity to which synonym is to be added
+        :param keyword_name: name of keyword to which synonym is to be added
+        :param synonym: name of synonym to be created
         """
         params = {}
         headers = headers or {}
@@ -563,8 +563,8 @@ class Wit(object):
         """
         Creates a new trait with the given attributes.
 
-		:param trait_name: name of trait to be created
-		:param values: list of values for the trait
+        :param trait_name: name of trait to be created
+        :param values: list of values for the trait
         """
         params = {}
         headers = headers or {}
@@ -579,8 +579,8 @@ class Wit(object):
         """
         Creates a new trait with the given attributes.
 
-		:param trait_name: name of trait to which new value is to be added
-		:param new_value: name of new trait value
+        :param trait_name: name of trait to which new value is to be added
+        :param new_value: name of new trait value
         """
         params = {}
         headers = headers or {}
@@ -595,7 +595,7 @@ class Wit(object):
         """
         Train your utterances.
 
-		:param data: array of utterances with required arguments
+        :param data: array of utterances with required arguments
         """
         params = {}
         headers = headers or {}
@@ -609,10 +609,10 @@ class Wit(object):
         """
         Creates a new app for an existing user.
 
-		:param app_name: name of new app
-		:param lang: language code in ISO 639-1 format
-		:param private: private if true
-		:param timezone: default timezone of the app
+        :param app_name: name of new app
+        :param lang: language code in ISO 639-1 format
+        :param private: private if true
+        :param timezone: default timezone of the app
         """
         params = {}
         headers = headers or {}
@@ -629,10 +629,10 @@ class Wit(object):
         """
         Updates existing app with given attributes.
 
-		:param app_name: new_name
-		:param lang: language code in ISO 639-1 format
-		:param private: private if true
-		:param timezone: default timezone of the app
+        :param app_name: new_name
+        :param lang: language code in ISO 639-1 format
+        :param private: private if true
+        :param timezone: default timezone of the app
         """
         params = {}
         headers = headers or {}
@@ -655,11 +655,11 @@ class Wit(object):
         """
         Update the tag's name or description, or move the tag to point to another tag.
 
-		:param app_id: ID of existing app
-		:param tag_name: name of existing tag
-		:param new_name: name of new tag
-		:param desc: new description of tag
-		:param move_to: new name of tag
+        :param app_id: ID of existing app
+        :param tag_name: name of existing tag
+        :param new_name: name of new tag
+        :param desc: new description of tag
+        :param move_to: new name of tag
         """
         params = {}
         headers = headers or {}
