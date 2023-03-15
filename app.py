@@ -1,5 +1,5 @@
 from flask import Flask, request, make_response, jsonify, send_from_directory
-from wit import Wit
+from wit_alterado import Wit
 import json, shutil, random, tempfile, os
 from gtts import gTTS
 
@@ -66,7 +66,6 @@ def get_audio_answer():
 
         response['audio'] = "http://192.168.1.3:5000/audio/download?filename=" + filename
 
-        print(response)
         return make_response(
             jsonify(response)
         )
@@ -191,7 +190,7 @@ def post_intent():
                 return 'Intent já existe'
 
             witResponse = client.create_intent(intentName)
-            print(witResponse)#Não sei se vai precisar deste ID.
+            #print(witResponse)Não sei se vai precisar deste ID.
             finalReturn = witResponse['id']+"-"+witResponse['name']
             return finalReturn
         except:
