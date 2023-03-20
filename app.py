@@ -43,7 +43,7 @@ def get_answer():
 @app.route('/audio', methods=['GET'])
 def get_audio_answer():
     if request.method == 'GET':
-        filename = "audio-0.mp3"
+        filename = "audio0.mp3"
         numero = int(filename[-5:-4])
 
         contentUserMessage = request.args.get('text')
@@ -67,10 +67,10 @@ def get_audio_answer():
         if not os.path.isdir('./audios'):
             os.mkdir('./audios')
         
-        
+
         while os.path.isfile('./audios/'+filename):        
             numero += 1
-            filename = filename[:6] + str(numero)+'.mp3'
+            filename = filename[:5] + str(numero)+'.mp3'
  
         audioObj.save('./audios/'+filename)
 
