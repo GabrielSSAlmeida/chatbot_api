@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 #4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT - Chatbot
 #LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ - Teste
-client = Wit(access_token="LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ")
+client = Wit(access_token="4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT")
 app = Flask(__name__)
 
 CORS(app)
@@ -66,7 +66,7 @@ def get_audio_answer():
         audioObj.save('./audios/'+filename)
 
 
-        response['audio'] = "http://192.168.1.3:5000/audio/download?filename=" + filename
+        response['audio'] = "https://flask-api-chatobot.onrender.com/audio/download?filename=" + filename
 
         return make_response(
             jsonify(response)
