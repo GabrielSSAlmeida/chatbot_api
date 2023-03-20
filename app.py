@@ -13,7 +13,7 @@ CORS(app)
 
 language = 'pt'
 tld = 'com.br'
-filename = "audio.mp3"
+
 
 ##Para resposta em texto
 @app.route('/', methods=['GET'])
@@ -43,6 +43,9 @@ def get_answer():
 @app.route('/audio', methods=['GET'])
 def get_audio_answer():
     if request.method == 'GET':
+        filename = "audio-0.mp3"
+        numero = int(filename[-5:-4])
+
         contentUserMessage = request.args.get('text')
         data_message = client.message(contentUserMessage)
         intent = data_message.get("intents")[0].get("name")
@@ -63,6 +66,12 @@ def get_audio_answer():
         audioObj = gTTS(text=mytext, lang=language, slow=False, tld=tld)
         if not os.path.isdir('./audios'):
             os.mkdir('./audios')
+        
+        
+        while os.path.isfile('./audios/'+filename):        
+            numero += 1
+            filename = filename[:6] + str(numero)+'.mp3'
+ 
         audioObj.save('./audios/'+filename)
 
 
