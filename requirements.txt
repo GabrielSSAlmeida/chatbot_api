@@ -2,3 +2,4 @@ Flask
 wit
 Gunicorn
 gTTS
+flask_cors

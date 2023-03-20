@@ -2,12 +2,14 @@ from flask import Flask, request, make_response, jsonify, send_from_directory
 from wit_alterado import Wit
 import json, shutil, random, tempfile, os
 from gtts import gTTS
+from flask_cors import CORS
 
 #4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT - Chatbot
 #LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ - Teste
 client = Wit(access_token="LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ")
 app = Flask(__name__)
 
+CORS(app)
 
 language = 'pt'
 tld = 'com.br'
@@ -288,4 +290,4 @@ def get_response():
             print(e)
             return 'Error'
 
-app.run(debug=True, host='0.0.0.0')
+app.run(debug=True)
