@@ -3,6 +3,29 @@ from wit_alterado import Wit
 import json, shutil, random, tempfile, os
 from gtts import gTTS
 from flask_cors import CORS
+from datetime import timedelta, datetime
+
+
+#apagar /audios a cada 20 min
+from apscheduler.schedulers.background import BackgroundScheduler
+
+def sensor():
+    if os.path.isdir('./audios'):
+        with open("./audios/date.txt", "r", encoding="utf-8") as arquivo:
+            date_str = arquivo.readline()
+        date = datetime.strptime(date_str, '%d-%m-%Y %H:%M:%S')
+
+        diferenca = (datetime.now() - date) / timedelta(minutes=1)
+        
+        if diferenca > 1:
+            shutil.rmtree('./audios')
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(sensor,'interval',minutes=2)
+sched.start()
+################################################################################
+
+
 
 #4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT - Chatbot
 #LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ - Teste
@@ -64,8 +87,13 @@ def get_audio_answer():
 
         mytext = response["text"]
         audioObj = gTTS(text=mytext, lang=language, slow=False, tld=tld)
+
+        #arquivo de data
         if not os.path.isdir('./audios'):
             os.mkdir('./audios')
+            date_now = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+            arquivo = open("./audios/date.txt", "a")
+            arquivo.write(str(date_now))
         
 
         while os.path.isfile('./audios/'+filename):        
