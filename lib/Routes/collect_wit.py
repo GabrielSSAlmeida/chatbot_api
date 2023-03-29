@@ -1,13 +1,13 @@
 from flask import request, jsonify, make_response, send_from_directory
 from flask_restful import Resource
-from app import client
+from lib import client
 from gtts import gTTS
 import json, random, os, shutil
 from useful_variables import UsefulVariables
 from datetime import datetime
 
 
-from app.auth.authenticate import jwt_required
+from lib.auth.authenticate import jwt_required
 
 
 class GetTextAnswer(Resource):

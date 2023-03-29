@@ -1,9 +1,9 @@
-from app import api, app
+from lib import api, app
 
-from app.Routes.collect_wit import GetTextAnswer, GetAudioAnswer, AudioDownload, DeleteAudio
-from app.Routes.access_key import AccessLogin, AccessRegister, DeleteAccess
-from app.Routes.train_wit import AddIntent, DeleteIntent, EditResponses, TrainBot, DeleteUtterance
-from app.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIntent
+from lib.Routes.collect_wit import GetTextAnswer, GetAudioAnswer, AudioDownload, DeleteAudio
+from lib.Routes.access_key import AccessLogin, AccessRegister, DeleteAccess
+from lib.Routes.train_wit import AddIntent, DeleteIntent, EditResponses, TrainBot, DeleteUtterance
+from lib.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIntent
 
 
 #TIRAR MODO DEBUG

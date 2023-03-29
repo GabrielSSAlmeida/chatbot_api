@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_restful import Api
 from flask_cors import CORS
-from app.configuration.config import Config
+from lib.configuration.config import Config
 from flask_marshmallow import Marshmallow, fields
 from flask_sqlalchemy import SQLAlchemy
 from wit_alterado.wit_ import Wit
 from apscheduler.schedulers.background import BackgroundScheduler
-from app.cron_task import CronTask
+from lib.cron_task import CronTask
 
 #4AF23B6X4U6WQSQ2SW6M4V2ARIAKK4JT - Chatbot
 #LV55LPSA5DDD3KRHYEU5GYXUD2AUHKIJ - Teste
@@ -26,7 +26,7 @@ CORS(app)
 db.init_app(app)
 
 #importação das tabelas do banco de dados
-from app.models.access_db import AccessModel, access_share_schema, access_many_share_schema
+from lib.models.access_db import AccessModel, access_share_schema, access_many_share_schema
 
 #Cria a database
 with app.app_context():

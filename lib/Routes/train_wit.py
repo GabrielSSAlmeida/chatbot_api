@@ -1,10 +1,10 @@
 from flask import request
 from flask_restful import Resource
-from app import client
+from lib import client
 import json, tempfile, shutil
 from useful_variables import UsefulVariables
 
-from app.auth.authenticate import jwt_required
+from lib.auth.authenticate import jwt_required
 
 
 

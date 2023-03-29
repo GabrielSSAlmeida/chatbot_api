@@ -3,7 +3,7 @@ from functools import wraps
 import jwt
 from flask import request, jsonify, current_app
 
-from app.models.access_db import AccessModel
+from lib.models.access_db import AccessModel
 
 def jwt_required(f):
     @wraps(f)

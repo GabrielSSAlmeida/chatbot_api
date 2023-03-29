@@ -1,8 +1,8 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
-from app.models.access_db import AccessModel, access_share_schema
+from lib.models.access_db import AccessModel, access_share_schema
 import datetime
-from app import app
+from lib import app
 import jwt
 
 class AccessRegister(Resource):
