@@ -3,3 +3,9 @@ wit
 Gunicorn
 gTTS
 flask_cors
+Flask-RESTful
+jwt
+flask-marshmallow
+Flask-SQLAlchemy
+Werkzeug
+APScheduler

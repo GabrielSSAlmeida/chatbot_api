@@ -8,7 +8,7 @@ from __future__ import unicode_literals
 import sys
 import logging
 
-from .wit import Wit
+from wit_alterado.wit_ import Wit
 
 # Set default logging for the module. Client applications can use a custom
 # logging config to override defaults specified here
