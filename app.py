@@ -6,6 +6,10 @@ from app.Routes.train_wit import AddIntent, DeleteIntent, EditResponses, TrainBo
 from app.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIntent
 
 
+#TIRAR MODO DEBUG
+#MUDAR SECRET KEY
+#COLOCAR GIT IGNORE
+
 api.add_resource(GetTextAnswer, "/")
 api.add_resource(GetAudioAnswer, "/audio")
 api.add_resource(AudioDownload, "/audio/download")

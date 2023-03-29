@@ -9,3 +9,4 @@ flask-marshmallow
 Flask-SQLAlchemy
 Werkzeug
 APScheduler
+marshmallow-sqlalchemy
