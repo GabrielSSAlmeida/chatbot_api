@@ -9,6 +9,7 @@ from lib.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIn
 #TIRAR MODO DEBUG
 #MUDAR SECRET KEY
 #COLOCAR GIT IGNORE
+#MUDAR CHAVE DO WIT PARA O DO ESPIM
 
 api.add_resource(GetTextAnswer, "/")
 api.add_resource(GetAudioAnswer, "/audio")

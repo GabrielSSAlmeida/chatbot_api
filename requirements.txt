@@ -4,7 +4,7 @@ Gunicorn
 gTTS
 flask_cors
 Flask-RESTful
-jwt
+PyJWT==v1.7.1
 flask-marshmallow
 Flask-SQLAlchemy
 Werkzeug
