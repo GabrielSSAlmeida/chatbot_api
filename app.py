@@ -10,6 +10,9 @@ from lib.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIn
 #MUDAR SECRET KEY
 #COLOCAR GIT IGNORE
 #MUDAR CHAVE DO WIT PARA O DO ESPIM
+#add timestemp no nome do arquivo
+#crontask para cada arquivo
+
 
 api.add_resource(GetTextAnswer, "/")
 api.add_resource(GetAudioAnswer, "/audio")

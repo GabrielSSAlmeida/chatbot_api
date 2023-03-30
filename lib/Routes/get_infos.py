@@ -8,7 +8,6 @@ from lib.auth.authenticate import jwt_required
 
 #get todas as intents do wit
 class GetAllIntents(Resource):
-    @jwt_required
     def get(self, current_user):
         try:
             return client.intent_list()
@@ -20,7 +19,6 @@ class GetAllIntents(Resource):
 #get all utterances do wit
 #numberOfUtterances <Obrigatorio>= Numero de Utterances(Mensagens de treinamento) maximos que deve receber entre 1 a 10000.
 class GetAllUtterances(Resource):
-    @jwt_required
     def get(self, numberOfUtterances, current_user):
         try:
             intentName = request.args.get('intent')
@@ -31,7 +29,6 @@ class GetAllUtterances(Resource):
 
 #get todas as respostas do json
 class GetResponsesIntent(Resource):
-    @jwt_required
     def get(self, current_user):
         try:
             intentName = request.args.get('intent')

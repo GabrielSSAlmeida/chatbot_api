@@ -11,7 +11,6 @@ from lib.auth.authenticate import jwt_required
 
 
 class GetTextAnswer(Resource):
-    @jwt_required
     def get(self, current_user):
         contentUserMessage = request.args.get('text')
         data_message = client.message(contentUserMessage)
@@ -33,7 +32,6 @@ class GetTextAnswer(Resource):
         )
     
 class GetAudioAnswer(Resource):
-        @jwt_required
         def get(self, current_user):
             filename = "audio0.mp3"
             numero = int(filename[-5:-4])
@@ -80,13 +78,11 @@ class GetAudioAnswer(Resource):
             )
         
 class AudioDownload(Resource):
-    @jwt_required
     def get(self, current_user):
         nameFile = request.args.get('filename')
         return send_from_directory(UsefulVariables.PATH_AUDIOS, nameFile, as_attachment=False)
 
 class DeleteAudio(Resource):
-    @jwt_required
     def get(self, current_user):
         dirName = request.args.get('dirname')
         final_dirname = os.path.join(UsefulVariables.BASENAME_DIRECTORY, dirName)
