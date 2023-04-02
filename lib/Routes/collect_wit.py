@@ -102,8 +102,7 @@ class GetAudioAnswer(Resource):
 
             #salva o arquivo de audio
             audioObj.save(os.path.join(UsefulVariables.PATH_AUDIOS, filename))
-            SP = zoneinfo.ZoneInfo("America/Sao_Paulo")
-            future20min = (datetime.now() + timedelta(minutes=1)).replace(fold=1).strftime('%Y-%m-%d %H:%M:%S')
+            future20min = (datetime.now() + timedelta(minutes=20)).replace(fold=1).strftime('%Y-%m-%d %H:%M:%S')
 
             sched = BackgroundScheduler(daemon=True)
             sched.add_job(func = CronTask.deleteAudio,trigger='date',next_run_time= future20min, args=[filename])
