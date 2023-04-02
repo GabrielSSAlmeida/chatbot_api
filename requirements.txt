@@ -12,3 +12,4 @@ APScheduler
 marshmallow-sqlalchemy
 python-dateutil
 tzlocal==2.1
+flask-migrate

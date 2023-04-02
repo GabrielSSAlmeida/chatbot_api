@@ -2,10 +2,10 @@ from flask import request, jsonify, make_response, send_from_directory
 from flask_restful import Resource
 from lib import client
 from gtts import gTTS
-import json, random, os, shutil
+import random, os
 from useful_variables import UsefulVariables
 from datetime import datetime, timedelta
-from lib.models.intent_db import IntentModel, intent_share_schema
+from lib.models.intent_db import IntentModel
 from lib.models.response_db import ResponseModel, response_many_share_schema
 from apscheduler.schedulers.background import BackgroundScheduler
 from lib.cron_task import CronTask

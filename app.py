@@ -6,8 +6,6 @@ from lib.Routes.train_wit import AddIntent, DeleteIntent, EditResponses, TrainBo
 from lib.Routes.get_infos import GetAllIntents, GetAllUtterances, GetResponsesIntent
 
 
-#CRON TASK PARA CADA ARQUIVO DE AUDIO
-
 
 api.add_resource(GetTextAnswer, "/")
 api.add_resource(GetAudioAnswer, "/audio")
@@ -32,4 +30,4 @@ api.add_resource(GetResponsesIntent, "/get_response")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

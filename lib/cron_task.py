@@ -1,5 +1,4 @@
-import shutil, os
-from datetime import timedelta, datetime
+import os
 from useful_variables import UsefulVariables
 
 class CronTask:
