@@ -1,14 +1,13 @@
 import shutil, os
 from datetime import timedelta, datetime
+from useful_variables import UsefulVariables
 
 class CronTask:
-    def sensor():
-        if os.path.isdir('./audios'):
-            with open("./audios/date.txt", "r", encoding="utf-8") as arquivo:
-                date_str = arquivo.readline()
-            date = datetime.strptime(date_str, '%d-%m-%Y %H:%M:%S')
-
-            diferenca = (datetime.now() - date) / timedelta(minutes=1)
-            
-            if diferenca > 20:
-                shutil.rmtree('./audios') 
+    def deleteAudio(filename):
+        if os.path.isdir(UsefulVariables.PATH_AUDIOS):
+            if os.path.isfile(os.path.join(UsefulVariables.PATH_AUDIOS, filename)):
+                os.remove(os.path.join(UsefulVariables.PATH_AUDIOS, filename))
+            else:
+                print("Não foi possivel encontrar o arquivo "+filename)
+        else:
+            print("Não foi possivel encontrar o diretorio /audios")

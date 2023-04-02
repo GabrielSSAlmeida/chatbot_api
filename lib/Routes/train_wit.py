@@ -1,8 +1,8 @@
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
 from lib import client
-import json, tempfile, shutil
-from useful_variables import UsefulVariables
+from lib.models.intent_db import IntentModel, intent_share_schema
+from lib.models.response_db import ResponseModel, response_many_share_schema
 
 from lib.auth.authenticate import jwt_required
 
@@ -19,7 +19,7 @@ def verify_intent(intentName):
 
 
 
-#Adiciona intent no wit e no json
+#Adiciona intent no wit e no banco de dados
 class AddIntent(Resource):
     @jwt_required
     def post(self, current_user):
@@ -27,35 +27,51 @@ class AddIntent(Resource):
             #Pega o json pelo POST
             responseJson = request.get_json()
             intentName = responseJson['name']
+            programId = responseJson['program_id']
+            intentDescription = responseJson['description']
             responseArray = responseJson['response']
 
-            if(verify_intent(intentName)):
+            intentNameWit = f"{intentName}_{programId}_"
+
+            if(verify_intent(intentNameWit)):
                 return 'Intent já existe'
             
             #Cria a intent no wit
-            witResponse = client.create_intent(intentName)
+            witResponse = client.create_intent(intentNameWit)
             if not "id" or not "name" in witResponse:
                 return 'Erro ao criar intent'
-
-            finalReturn = witResponse['id']+"-"+witResponse['name']
             
-            #Cria a intent com as respostas no json
-            #cria um arquivo json temporario
-            with open(UsefulVariables.PATH_ANSWER, 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
-                dados = json.load(arq)
-                #escreve nesse json
-                tam = len(responseArray)- 1
-                dados[intentName] = {
-                    "tam": tam,
-                    "response": responseArray
-                }
+            #Cria a intent com as respostas no banco de dados
+            new_intent = IntentModel(id= witResponse['id'], name=intentName, program=programId, description=intentDescription)
+            new_intent.save_to_db()
+            
+            if len(responseArray) != 0:
+                type = ""
+                value= ""
+                for response in responseArray:
+                    if response['type'] == "text":
+                        type = response['type']
+                        value = response['value']
+                        
+                        new_response = ResponseModel(type=type, value=value, intent_id=witResponse['id'])
+                        new_response.save_to_db()
+                    else:
+                        type = response['type']
+                        description = response['description']
+                        value = response['value']
+                        new_response = ResponseModel(type=type, value=value, description=description, intent_id=witResponse['id'])
+                        new_response.save_to_db()
 
-                json.dump(dados, tmpfile, ensure_ascii=False, indent=4, separators=(',',':'))
 
-            # se tudo deu certo, renomeia o arquivo temporário
-            shutil.move(tmpfile.name, UsefulVariables.PATH_ANSWER)
+            result_intent = intent_share_schema.dump(
+                IntentModel.find_by_id(id=witResponse['id'])
+            )
+            result_response = response_many_share_schema.dump(
+                ResponseModel.find_by_intent_id(intent_id=witResponse['id'])
+            )
 
-            return finalReturn
+            result_intent['response'] =  result_response
+            return jsonify(result_intent)
 
         except Exception as e:
             print(e)
@@ -63,30 +79,40 @@ class AddIntent(Resource):
         
 
 
-#deleta intent no wit e no json
+#deleta intent no wit e no banco de dados
 #OBS: TIVE QUE ALTERAR O ARQUIVO WIT, POIS TINHA UM ERRO COM A FUNÇÃO 'urllib.quote_plus()'
 #A IMPORTAÇÃO MUDOU PARAR 'import urllib.parse' e a chamada foi para 'urllib.parse.quote_plus()'
 class DeleteIntent(Resource):
     @jwt_required
-    def delete(self, intentName, current_user):
+    def delete(self, intentName, program, current_user):
         try:
-            if(verify_intent(intentName)):
-                witResponse = client.delete_intent(intentName)
+            intentNameWit = f"{intentName}_{program}_"
+            if(verify_intent(intentNameWit)):
+                witResponse = client.delete_intent(intentNameWit)
 
-                if witResponse["deleted"] != intentName:
+                if witResponse["deleted"] != intentNameWit:
                     return 'Erro ao apagar Intent'
 
-                #cria um arquivo json temporario
-                with open(UsefulVariables.PATH_ANSWER, 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
-                    dados = json.load(arq)
-                    if intentName in dados:
-                        dados.pop(intentName, None)
+                #Deleta a Intent e suas respectivas respostas do banco de dados
+                delete_intent = IntentModel.find_by_name_program(name=intentName, program=program)
+                if delete_intent:
+                    intentId = delete_intent.id
 
-                        json.dump(dados, tmpfile, ensure_ascii=False, indent=4, separators=(',',':'))
+                    delete_response = ResponseModel.find_by_intent_id(intent_id=intentId)
+                    if delete_response:
+                        for delete in delete_response:
+                            delete.delete_from_db()
+                        
                     else:
-                        return 'Erro'
-                # se tudo deu certo, renomeia o arquivo temporário
-                shutil.move(tmpfile.name, UsefulVariables.PATH_ANSWER)
+                        response = jsonify({"erro": "Erro ao apagar Respostas no db"})
+                        response.status_code = 400
+                        return response 
+                else:
+                    response = jsonify({"erro": "Erro ao apagar Intent no db"})
+                    response.status_code = 400
+                    return response
+                delete_intent.delete_from_db()
+
 
                 return witResponse
             
@@ -98,34 +124,69 @@ class DeleteIntent(Resource):
 
 
 
-#edita as respostas no json
+#edita as respostas na bd
 class EditResponses(Resource):
     @jwt_required
     def put(self, current_user):
         try:     
             responseJson = request.get_json()
             intentName = responseJson['name']
+            programId = responseJson['program_id']
             responseArray = responseJson['response']
 
-             #cria um arquivo json temporario
-            with open(UsefulVariables.PATH_ANSWER, 'r', encoding="utf-8") as arq, tempfile.NamedTemporaryFile('w', delete=False, encoding="utf-8") as tmpfile:
-                dados = json.load(arq)
-                if intentName in dados:
-                    #escreve nesse json
-                    tam = len(responseArray)- 1
-                    dados[intentName] = {
-                        "tam": tam,
-                        "response": responseArray
-                    }
+            if intentName != "" and programId != "":
+                intent_update = IntentModel.find_by_name_program(name=intentName, program=programId)
+                if intent_update:
 
-                    json.dump(dados, tmpfile, ensure_ascii=False, indent=4, separators=(',',':'))
+                    intentId = intent_update.id
+
+                    update_response = ResponseModel.find_by_intent_id(intent_id=intentId)
+                    if update_response:#Se existir respostas para essa intent, apague
+                        for delete in update_response:
+                            delete.delete_from_db()
+                        
+                        if len(responseArray) != 0:
+                            #Adiciona novas Respostas ======================
+                            type = ""
+                            value= ""
+                            for response in responseArray:
+                                if response['type'] == "text":
+                                    type = response['type']
+                                    value = response['value']
+                                    
+                                    new_response = ResponseModel(type=type, value=value, intent_id=intentId)
+                                    new_response.save_to_db()
+                                else:
+                                    type = response['type']
+                                    description = response['description']
+                                    value = response['value']
+                                    new_response = ResponseModel(type=type, value=value, description=description, intent_id=intentId)
+                                    new_response.save_to_db()
+                    else:
+                        response = jsonify({"erro": "Não existe respostas para essa Intent"})
+                        response.status_code = 400
+                        return response       
                 else:
-                    return 'Erro'
-            # se tudo deu certo, renomeia o arquivo temporário
-            shutil.move(tmpfile.name, UsefulVariables.PATH_ANSWER)
+                    response = jsonify({"erro": "Erro ao atualizar Intent no db"})
+                    response.status_code = 400
+                    return response
 
+            else:
+                response = jsonify({"erro": "É preciso o nome da Intent e do Programa"})
+                response.status_code = 400
+                return response 
+            
 
-            return 'sucess'
+            result_intent = intent_share_schema.dump(
+                IntentModel.find_by_id(id=intentId)
+            )
+            result_response = response_many_share_schema.dump(
+                ResponseModel.find_by_intent_id(intent_id=intentId)
+            )
+
+            result_intent['response'] =  result_response
+            return jsonify(result_intent)
+        
         except Exception as e:
             print(e)
             return 'Error'
@@ -141,8 +202,11 @@ class TrainBot(Resource):
             utterances = request.get_json()
             #Verificando se a intenção existe (Add entidade caso precise)
             for utterance in utterances:
-                if(not verify_intent(utterance['intent'])): #Se não existe a intent, retorna o erro
+                intentNameWit = f"{utterance['intent']}_{utterance['program_id']}_"
+                if(not verify_intent(intentNameWit)): #Se não existe a intent, retorna o erro
                     return 'Alguma intent enviada não existe'
+                utterance['intent'] = intentNameWit
+                utterance.pop("program_id")
                 
             witResponse = client.train(utterances)
             return witResponse

@@ -27,12 +27,14 @@ db.init_app(app)
 
 #importação das tabelas do banco de dados
 from lib.models.access_db import AccessModel, access_share_schema, access_many_share_schema
+from lib.models.intent_db import IntentModel, intent_share_schema, intent_many_share_schema
+from lib.models.response_db import ResponseModel, response_share_schema, response_many_share_schema
 
 #Cria a database
 with app.app_context():
     db.create_all()
 
 #Cria a CronTask de apagar  audios a cada 20min
-sched = BackgroundScheduler(daemon=True)
+""" sched = BackgroundScheduler(daemon=True)
 sched.add_job(CronTask.sensor,'interval',minutes=2)
-sched.start()
+sched.start() """

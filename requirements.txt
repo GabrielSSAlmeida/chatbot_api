@@ -10,3 +10,5 @@ Flask-SQLAlchemy
 Werkzeug
 APScheduler
 marshmallow-sqlalchemy
+python-dateutil
+tzlocal==2.1
