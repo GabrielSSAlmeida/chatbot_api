@@ -29,6 +29,10 @@ class IntentModel(db.Model):
     @classmethod
     def find_by_name_program(cls, name, program):
         return cls.query.filter_by(name=name, program = program).first()
+    
+    @classmethod
+    def find_by_program(cls, program):
+        return cls.query.filter_by(program = program).all()
 
     @classmethod
     def find_by_name_or_404(cls, name, program):

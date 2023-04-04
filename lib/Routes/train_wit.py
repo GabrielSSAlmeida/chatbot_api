@@ -3,7 +3,8 @@ from flask_restful import Resource
 from lib import client
 from lib.models.intent_db import IntentModel, intent_share_schema
 from lib.models.response_db import ResponseModel, response_many_share_schema
-
+from useful_variables import UsefulVariables
+import os
 from lib.auth.authenticate import jwt_required
 
 
@@ -192,6 +193,58 @@ class EditResponses(Resource):
             return 'Error'
         
 
+#recebe foto e video como resposta possivel
+class FileEditResponse(Resource):
+    @jwt_required
+    def post(self, current_user):
+        try:
+            arquivo = request.files
+            file = arquivo.getlist('file')[0]
+            intent = request.form['intent']
+            programId = request.form['program_id']
+            description = request.form['description']
+            print(file.content_type)
+            path=""
+            type=""
+            #Cria pasta de audio caso nao exista
+            if "image" in file.content_type:
+                basePath = UsefulVariables.PATH_IMAGE
+                type="image"
+            elif "video" in file.content_type:
+                basePath = UsefulVariables.PATH_VIDEO
+                type="video"
+            else:
+                response = jsonify({"erro": "content_type error / tipo de arquivo nao suportado"})
+                response.status_code = 400
+                return response
+            
+            if not os.path.isdir(basePath):
+                os.mkdir(basePath)
+
+            filenameTratado = file.filename.replace(" ", "_")
+            path = os.path.join(basePath, filenameTratado)
+
+
+            file.save(path)
+
+            intent_update = IntentModel.find_by_name_program(name=intent, program=programId)
+            
+            value = UsefulVariables.API_URL+type+"/download?filename=" + filenameTratado
+            new_response = ResponseModel(type=type, value=value, description=description, intent_id=intent_update.id)
+            new_response.save_to_db()
+
+            response = jsonify(
+                    {
+                        "Sucess": "Upload realizado com sucesso", 
+                        "url": value
+                    }
+                )
+            response.status_code = 200
+            return response
+
+        except Exception as e:
+            print(e)
+            return 'Error'
 
 
 #Enviar as perguntas(Utterances) para treinar o bot

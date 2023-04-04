@@ -3,7 +3,7 @@ from flask_restful import Resource
 from lib import client
 import json, tempfile, shutil
 from useful_variables import UsefulVariables
-from lib.models.intent_db import IntentModel, intent_share_schema
+from lib.models.intent_db import IntentModel, intent_share_schema, intent_many_share_schema
 from lib.models.response_db import ResponseModel, response_many_share_schema
 
 from lib.auth.authenticate import jwt_required
@@ -46,6 +46,20 @@ class GetResponsesIntent(Resource):
 
             result_intent['response'] =  result_response
             return jsonify(result_intent)
+        except Exception as e:
+            print(e)
+            return 'Error'
+        
+class GetIntentsbyProgram(Resource):
+    def get(self):
+        try:
+            programId = request.args.get('programId')
+
+            result_intent = intent_many_share_schema.dump(
+                IntentModel.find_by_program(program=programId)
+            )
+            
+            return result_intent
         except Exception as e:
             print(e)
             return 'Error'

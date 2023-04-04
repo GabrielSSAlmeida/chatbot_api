@@ -9,6 +9,8 @@ from lib.models.intent_db import IntentModel
 from lib.models.response_db import ResponseModel, response_many_share_schema
 from apscheduler.schedulers.background import BackgroundScheduler
 from lib.cron_task import CronTask
+#import speech_recognition as sr
+#from pydub import AudioSegment
 
 
 class GetTextAnswer(Resource):
@@ -120,6 +122,17 @@ class AudioDownload(Resource):
         nameFile = request.args.get('filename')
         return send_from_directory(UsefulVariables.PATH_AUDIOS, nameFile, as_attachment=False)
 
+
+class ImageDownload(Resource):
+    def get(self):
+        nameFile = request.args.get('filename')
+        return send_from_directory(UsefulVariables.PATH_IMAGE, nameFile, as_attachment=False)
+    
+class VideoDownload(Resource):
+    def get(self):
+        nameFile = request.args.get('filename')
+        return send_from_directory(UsefulVariables.PATH_VIDEO, nameFile, as_attachment=False)
+
 """ class DeleteAudio(Resource):
     def get(self):
         dirName = request.args.get('dirname')
@@ -129,3 +142,30 @@ class AudioDownload(Resource):
             return ('', 204)
         else:
             return ('', 404) """
+
+""" class UploadAudio(Resource):
+    def post(self):
+        r = sr.Recognizer()
+        arquivo = request.files
+        file = arquivo.getlist('file')[0]
+        #Cria pasta de audio caso nao exista
+        if not os.path.isdir(UsefulVariables.PATH_AUD):
+            os.mkdir(UsefulVariables.PATH_AUD)
+    
+        path = os.path.join(UsefulVariables.PATH_AUD, file.filename)
+        file.save(path)
+        
+        print("AAAAAAAAAAAAAAAAAAAAA"+path)
+        if os.path.isfile(path):
+            audioMp4 = AudioSegment.from_file(path, "mp4")
+            audioMp4.export(os.path.join(UsefulVariables.PATH_AUD, "answer.flac"), format="flac")
+        
+        with sr.AudioFile(os.path.join(UsefulVariables.PATH_AUD, "answer.flac")) as source:
+            r.adjust_for_ambient_noise(source)
+            # listen for the data (load audio to memory)
+            audio_data = r.record(source)
+            # recognize (convert from speech to text)
+            text = r.recognize_google(audio_data, language="pt-BR")
+            print(text) """
+        
+        

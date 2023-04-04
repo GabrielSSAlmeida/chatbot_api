@@ -89,6 +89,16 @@ class Wit(object):
         resp = req(self.logger, self.access_token, 'POST', '/speech', params,
                    data=audio_file, headers=headers)
         return resp
+    
+    def dictation(self, audio_file, headers=None, verbose=None):
+        
+        params = {}
+        headers = headers or {}
+        if verbose:
+            params['verbose'] = True
+        resp = req(self.logger, self.access_token, 'POST', '/dictation', params,
+                   data=audio_file, headers=headers)
+        return resp
 
     def interactive(self, handle_message=None, context=None):
         """Runs interactive command line chat between user and bot. Runs
